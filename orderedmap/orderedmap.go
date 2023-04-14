@@ -1,7 +1,5 @@
 package orderedmap
 
-import . "dt/list" // for output.  This import is used to print messages. 	// this line is not output.
-
 type OrderedMap[K comparable, V any] struct {
 	kv map[K]*Element[K, V]
 	ll list[K, V]
