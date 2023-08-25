@@ -1,6 +1,7 @@
 package cqueue
 
 import (
+	"runtime"
 	"sync/atomic"
 )
 
@@ -27,6 +28,7 @@ func (q *Queue[T]) Enqueue(val T) {
 		if q.Tail.CompareAndSwap(tailVal, node) {
 			return
 		}
+		runtime.Gosched() // 让出执行权
 	}
 }
 
@@ -41,5 +43,6 @@ func (q *Queue[T]) Dequeue() T {
 		if q.Head.CompareAndSwap(head, nextVal) {
 			return head.val
 		}
+		runtime.Gosched() // 让出执行权
 	}
 }
